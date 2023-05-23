@@ -12,7 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) =>
+{
   res.send({ message: "API running..." });
 });
 
@@ -23,4 +24,12 @@ app.get("/", (req, res) => {
 const PORT = 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // connectDB();
+process.on('SIGTERM', () =>
+{
+  server.close(() =>
+  {
+    console.log('Server closed.');
+    process.exit(0);
+  });
+});
 module.exports = app
