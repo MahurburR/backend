@@ -31,7 +31,7 @@ const signInUser = async (req, res) => {
     }
 
     const same = await checkPassword(password, user.password)
-    if (same) {
+    if (same && user) {
       let token = newToken(user)
       res.status(200).send({status: 'ok', token})
       return
