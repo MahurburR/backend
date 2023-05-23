@@ -21,21 +21,16 @@ const verifyUser = async (req, res, next) =>
 
   try
   {
-    console.log("authorization",authorization)
-    console.log("authorization", authorization.split(' ')[1])
-
     let payload;
     if (authorization.split(' ')[1]!=="false")
       payload = await verifyToken(authorization.split(' ')[1])
     if (Boolean(payload))
     {
-      console.log("inside if")
       const user = await User.findById(payload.id, { password: 0 })
       req['user'] = user
       next()
     } else
     {
-      console.log("inside else")
 
       sendResponseError(400, `you are not authorizeed`, res)
     }
